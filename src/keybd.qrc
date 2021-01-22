@@ -1,5 +1,7 @@
 <RCC>
-  <qresource prefix="keybd">
+  <qresource prefix="/keybd">
     <file>keybd.ico</file>
+    <file>sound/s_start.wav</file>
+    <file>sound/s_stop.wav</file>
   </qresource>
 </RCC>

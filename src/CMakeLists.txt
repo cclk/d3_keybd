@@ -62,6 +62,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Widgets)  
 find_package(Qt5Core)
 find_package(Qt5Gui)
+find_package(Qt5Multimedia)
 
 #同理，查找当前文件夹中所有的ui文件
 FILE(GLOB UI_FILES "${SOURCE_DIR}/*.ui") 
@@ -70,7 +71,11 @@ FILE(GLOB UI_FILES "${SOURCE_DIR}/*.ui")
 QT5_WRAP_UI(WRAP_FILES ${UI_FILES})
 
 #添加资源文件
-SET(RCC_FILES keybd.qrc keybd.ico keybd.rc)
+SET(RCC_FILES keybd.ico keybd.rc)
+
+#qrc
+SET(QRC_SOURCE_FILES keybd.qrc)
+qt5_add_resources(QRC_FILES ${QRC_SOURCE_FILES})
 
 #将ui文件和生成文件整理在一个文件夹中，非必须
 SOURCE_GROUP("ui" FILES ${UI_FILES} ${WRAP_FILES} ${RCC_FILES})
@@ -79,12 +84,12 @@ SOURCE_GROUP("ui" FILES ${UI_FILES} ${WRAP_FILES} ${RCC_FILES})
 SET(SOURCE_FILE ${MAIN_SRC} ${UI_FILES} ${WRAP_FILES} ${RCC_FILES})
 
 #编译可执行文件
-ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILE})
+ADD_EXECUTABLE(${PROJECT_NAME} ${QRC_FILES} ${SOURCE_FILE})
 
 #执行文件链接属性
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LINK_LISTS})
 #添加Qt5依赖项
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui Qt5::Multimedia)
 
 IF (WIN32)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} winmm.lib)

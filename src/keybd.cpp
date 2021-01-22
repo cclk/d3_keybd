@@ -66,6 +66,8 @@ std::string GetAppPath()
 
 keybd::keybd(QWidget *parent)
     : QMainWindow(parent)
+    , _soundStart(":/keybd/sound/s_start.wav")
+    , _soundStop(":/keybd/sound/s_stop.wav")
 {
     _ui.setupUi(this);
     InitLogger("d3_keybd");
@@ -122,6 +124,7 @@ void keybd::onBtnStart()
     sKeyboardHook = ::SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, nullptr, 0);
 
     changeState(true);
+    _soundStart.play();
 }
 
 void keybd::onBtnStop()
@@ -142,6 +145,7 @@ void keybd::onBtnStop()
     }
 
     changeState(false);
+    _soundStop.play();
 }
 
 void keybd::onBtnSave()
@@ -218,17 +222,10 @@ void keybd::initUiData()
 void keybd::initTray()
 {
     // 托盘
-    // 创建托盘图标
-    QIcon icon = QIcon(":/keybd/keybd.ico");
     _trayIcon = new QSystemTrayIcon(this);
-    _trayIcon->setIcon(icon);
+    _trayIcon->setIcon(QIcon(":/keybd/keybd.ico"));
     _trayIcon->setToolTip(tr("d3_keybd"));
-    QString titlec = tr("d3_keybd");
-    QString textc = tr("keyboard for d3");
     _trayIcon->show();
-
-    // 弹出气泡提示
-    // m_trayIcon->showMessage(titlec, textc, QSystemTrayIcon::Information, 100);
 
     // 添加单/双击鼠标相应
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayiconActivated(QSystemTrayIcon::ActivationReason)));

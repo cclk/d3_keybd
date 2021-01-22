@@ -70,4 +70,7 @@ private:
     QAction *_restoreAction;
     QAction *_quitAction;
     QMenu   *_trayIconMenu;
+
+    QSound _soundStart;	// 开启成功声音
+    QSound _soundStop;
 };

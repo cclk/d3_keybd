@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="keybd">
-    </qresource>
+  <qresource prefix="keybd">
+    <file>keybd.ico</file>
+  </qresource>
 </RCC>

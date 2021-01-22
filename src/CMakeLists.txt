@@ -47,6 +47,7 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(${INCLUDE_LISTS})   #头文件搜索目录
 LINK_DIRECTORIES(${LIB_LISTS})          #链接库搜索路径
+include (${SOURCE_DIR}/../nuget.cmake)
 
 #当源码目录下有不需要编译的文件时可以指定后缀名
 FILE(GLOB MAIN_SRC "${SOURCE_DIR}/*.c*" "${SOURCE_DIR}/*.h*")
@@ -86,7 +87,9 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${LINK_LISTS})
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui)
 
 IF (WIN32)
-    #TARGET_LINK_LIBRARIES(${PROJECT_NAME} iot_mqtt.lib)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} winmm.lib)
+    INSTALL_NUGET(${PROJECT_NAME} Cvte.jsoncpp.native.static.md 1.7.4.2)
+    INSTALL_NUGET(${PROJECT_NAME} Cvte.logger.native.dynamic.md 1.5.0.118)
 ENDIF()
 
 #pdb、c11支持
